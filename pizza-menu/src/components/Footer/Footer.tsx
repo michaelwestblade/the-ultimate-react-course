@@ -12,7 +12,7 @@ export const Footer = () => {
 
     return (
         <footer className="footer">
-            <p>PIZZA</p>
+            {isOpen && <p>We're currently open!</p>}
         </footer>
     );
 }
