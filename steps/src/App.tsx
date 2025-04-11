@@ -10,19 +10,21 @@ function App() {
     ];
 
     const incrementStep = () => {
-        if (step < messages.length - 1) {
-            setStep(step + 1);
-        } else {
-            setStep(0);
-        }
+        setStep((currentStep: number) => {
+            if (currentStep < messages.length - 1) {
+                return currentStep + 1;
+            }
+            return 0;
+        })
     }
 
     const decrementStep = () => {
-        if (step > 0) {
-            setStep(step - 1);
-        } else {
-            setStep(messages.length - 1);
-        }
+        setStep((currentStep: number) => {
+            if (currentStep > 0) {
+                return currentStep - 1;
+            }
+            return messages.length - 1;
+        })
     }
 
     return (
