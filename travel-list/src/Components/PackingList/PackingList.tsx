@@ -5,9 +5,10 @@ export interface PackingListProps {
     items: Item[];
     onDeleteItem: (id: number) => void;
     onItemPackedChange: (id: number, packed: boolean) => void;
+    handleClearList: () => void;
 }
 
-export const PackingList = ({items, onDeleteItem, onItemPackedChange}: PackingListProps) => {
+export const PackingList = ({items, onDeleteItem, onItemPackedChange, handleClearList}: PackingListProps) => {
     const [sortBy, setSortBy] = useState('input');
     let sortedItems;
 
@@ -34,6 +35,7 @@ export const PackingList = ({items, onDeleteItem, onItemPackedChange}: PackingLi
                 <option value="description">Sort by description</option>
                 <option value="packed">Sort by packed status</option>
             </select>
+            <button onClick={handleClearList}>Clear List</button>
         </div>
     </div>
 }
