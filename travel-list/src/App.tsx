@@ -16,11 +16,15 @@ function App() {
         setItems(items.filter(item => item.id !== id));
     }
 
+    const handleItemPackedChange = (id: number, packed: boolean) => {
+        setItems(items.map(item => item.id === id ? {...item, packed} : item));
+    }
+
     return (
         <div className="App">
             <Logo/>
             <Form onAddItems={handleAddItem}/>
-            <PackingList items={items} onDeleteItem={handleDeleteItem}/>
+            <PackingList items={items} onDeleteItem={handleDeleteItem} onItemPackedChange={handleItemPackedChange}/>
             <Stats/>
         </div>
     );
