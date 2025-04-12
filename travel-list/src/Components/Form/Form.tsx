@@ -2,10 +2,10 @@ import {FormEvent, useState} from "react";
 import {ItemProps} from "../Item/Item";
 
 export interface FormProps {
-    submitHandler: (newItem: ItemProps) => void;
+    onAddItems: (newItem: ItemProps) => void;
 }
 
-export const Form = ({submitHandler}: FormProps) => {
+export const Form = ({onAddItems}: FormProps) => {
     const maxOptions = 20;
     const [description, setDescription] = useState('');
     const [quantity, setQuantity] = useState(1);
@@ -18,7 +18,7 @@ export const Form = ({submitHandler}: FormProps) => {
         setDescription("");
         setQuantity(1);
 
-        submitHandler(newItem);
+        onAddItems(newItem);
     }
 
     return <form className="add-form" onSubmit={handleSubmit}>

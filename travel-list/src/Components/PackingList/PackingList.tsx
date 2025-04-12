@@ -1,11 +1,13 @@
-import {Item} from "../Item/Item";
+import {Item, ItemProps} from "../Item/Item";
+import {useState} from "react";
 
-export const PackingList = () => {
-    const initialItems = [
-        {id: 1, description: 'Passports', quantity: 2, packed: false},
-        {id: 2, description: 'Socks', quantity: 12, packed: false},
-    ]
+export interface PackingListProps {
+    items: ItemProps[];
+}
+
+export const PackingList = ({items}: PackingListProps) => {
+    
     return <ul className="list">
-        {initialItems.map(item => <Item id={item.id} description={item.description} quantity={item.quantity} packed={item.packed}/>)}
+        {items.map(item => <Item key={item.id} id={item.id} description={item.description} quantity={item.quantity} packed={item.packed}/>)}
     </ul>
 }
