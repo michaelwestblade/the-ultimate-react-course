@@ -1,8 +1,8 @@
 import {FormEvent, useState} from "react";
-import {ItemProps} from "../Item/Item";
+import {Item} from "../Item/Item";
 
 export interface FormProps {
-    onAddItems: (newItem: ItemProps) => void;
+    onAddItems: (newItem: Item) => void;
 }
 
 export const Form = ({onAddItems}: FormProps) => {
