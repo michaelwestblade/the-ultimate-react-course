@@ -6,6 +6,7 @@ import {Movie} from "./Components/MovieList/Movie";
 import Logo from "./Components/NavBar/Logo";
 import Search from "./Components/NavBar/Search";
 import SearchResults from "./Components/NavBar/SearchResults";
+import Main from "./Components/Main";
 
 const tempMovieData = [
     {
@@ -65,10 +66,10 @@ function App() {
                 <Search/>
                 <SearchResults movies={movies}/>
             </NavBar>
-            <main className="main">
+            <Main>
                 <ListBox movies={movies}/>
                 <WatchedBox watched={watched}/>
-            </main>
+            </Main>
         </div>
     );
 }
