@@ -2,6 +2,7 @@ import {useState} from "react";
 import {Movie} from "./Movie";
 import WatchedSummary from "./WatchedSummary";
 import MovieBox from "./MovieBox";
+import WatchedMoviesList from "./WatchedMoviesList";
 
 export interface WatchedBoxProps {
     movies: Movie[];
@@ -51,12 +52,7 @@ export default function WatchedBox({}: WatchedBoxProps) {
         {isOpen && (
             <>
                 <WatchedSummary watched={watched} avgImdbRating={avgImdbRating} avgUserRating={avgUserRating} avgRuntime={avgRuntime} />
-
-                <ul className="list">
-                    {watched.map((movie) => (
-                        <MovieBox movie={movie} watched={true} />
-                    ))}
-                </ul>
+                <WatchedMoviesList watched={watched} />
             </>
         )}
     </div>
