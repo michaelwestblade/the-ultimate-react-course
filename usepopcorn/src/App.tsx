@@ -3,6 +3,9 @@ import NavBar from "./Components/NavBar/NavBar";
 import ListBox from "./Components/MovieList/ListBox";
 import WatchedBox from "./Components/MovieList/WatchedBox";
 import {Movie} from "./Components/MovieList/Movie";
+import Logo from "./Components/NavBar/Logo";
+import Search from "./Components/NavBar/Search";
+import SearchResults from "./Components/NavBar/SearchResults";
 
 const tempMovieData = [
     {
@@ -57,7 +60,11 @@ function App() {
 
     return (
         <div className="App">
-            <NavBar movies={movies}/>
+            <NavBar>
+                <Logo/>
+                <Search/>
+                <SearchResults movies={movies}/>
+            </NavBar>
             <main className="main">
                 <ListBox movies={movies}/>
                 <WatchedBox watched={watched}/>
