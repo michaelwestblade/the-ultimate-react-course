@@ -1,12 +1,14 @@
 import React, {useState} from 'react';
 import NavBar from "./Components/NavBar/NavBar";
 import ListBox from "./Components/MovieList/ListBox";
-import WatchedBox from "./Components/MovieList/WatchedBox";
 import {Movie} from "./Components/MovieList/Movie";
 import Logo from "./Components/NavBar/Logo";
 import Search from "./Components/NavBar/Search";
 import SearchResults from "./Components/NavBar/SearchResults";
 import Main from "./Components/Main";
+import MovieList from "./Components/MovieList/MovieList";
+import WatchedSummary from "./Components/MovieList/WatchedSummary";
+import WatchedMoviesList from "./Components/MovieList/WatchedMoviesList";
 
 const tempMovieData = [
     {
@@ -67,8 +69,13 @@ function App() {
                 <SearchResults movies={movies}/>
             </NavBar>
             <Main>
-                <ListBox movies={movies}/>
-                <WatchedBox watched={watched}/>
+                <ListBox>
+                    <MovieList movies={movies} />
+                </ListBox>
+                <ListBox>
+                    <WatchedSummary watched={watched} />
+                    <WatchedMoviesList watched={watched} />
+                </ListBox>
             </Main>
         </div>
     );

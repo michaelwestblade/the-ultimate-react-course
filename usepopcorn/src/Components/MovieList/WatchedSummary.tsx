@@ -2,12 +2,15 @@ import {Movie} from "./Movie";
 
 export interface WatchedSummaryProps {
     watched: Movie[];
-    avgImdbRating: number;
-    avgUserRating: number;
-    avgRuntime: number;
-
 }
-export default function WatchedSummary({watched, avgImdbRating, avgUserRating, avgRuntime}: WatchedSummaryProps) {
+export default function WatchedSummary({watched}: WatchedSummaryProps) {
+    const average = (arr: (number | undefined)[] = []) =>
+        arr.reduce((acc, cur, i, arr) => {
+            return typeof(acc) !== 'undefined' && typeof(cur) !== 'undefined' ? acc + cur / arr.length : 0;
+        }, 0) || 0;
+    const avgImdbRating = average(watched.filter(movie => movie && movie.imdbRating).map((movie) => movie?.imdbRating));
+    const avgUserRating = average(watched.filter(movie => movie && movie.userRating).map((movie) => movie?.userRating));
+    const avgRuntime = average(watched.filter(movie => movie && movie.runtime).map((movie) => movie?.runtime));
     return <div className="summary">
         <h2>Movies you watched</h2>
         <div>
