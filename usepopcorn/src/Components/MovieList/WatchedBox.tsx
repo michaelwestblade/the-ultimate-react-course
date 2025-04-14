@@ -1,5 +1,7 @@
 import {useState} from "react";
 import {Movie} from "./Movie";
+import WatchedSummary from "./WatchedSummary";
+import MovieBox from "./MovieBox";
 
 export interface WatchedBoxProps {
     movies: Movie[];
@@ -34,7 +36,7 @@ export default function WatchedBox({}: WatchedBoxProps) {
     const average = (arr: (number | undefined)[] = []) =>
         arr.reduce((acc, cur, i, arr) => {
             return typeof(acc) !== 'undefined' && typeof(cur) !== 'undefined' ? acc + cur / arr.length : 0;
-        }, 0);
+        }, 0) || 0;
     const avgImdbRating = average(watched.filter(movie => movie && movie.imdbRating).map((movie) => movie?.imdbRating));
     const avgUserRating = average(watched.filter(movie => movie && movie.userRating).map((movie) => movie?.userRating));
     const avgRuntime = average(watched.filter(movie => movie && movie.runtime).map((movie) => movie?.runtime));
@@ -48,48 +50,11 @@ export default function WatchedBox({}: WatchedBoxProps) {
         </button>
         {isOpen && (
             <>
-                <div className="summary">
-                    <h2>Movies you watched</h2>
-                    <div>
-                        <p>
-                            <span>#️⃣</span>
-                            <span>{watched.length} movies</span>
-                        </p>
-                        <p>
-                            <span>⭐️</span>
-                            <span>{avgImdbRating}</span>
-                        </p>
-                        <p>
-                            <span>🌟</span>
-                            <span>{avgUserRating}</span>
-                        </p>
-                        <p>
-                            <span>⏳</span>
-                            <span>{avgRuntime} min</span>
-                        </p>
-                    </div>
-                </div>
+                <WatchedSummary watched={watched} avgImdbRating={avgImdbRating} avgUserRating={avgUserRating} avgRuntime={avgRuntime} />
 
                 <ul className="list">
                     {watched.map((movie) => (
-                        <li key={movie.imdbID}>
-                            <img src={movie.Poster} alt={`${movie.Title} poster`} />
-                            <h3>{movie.Title}</h3>
-                            <div>
-                                <p>
-                                    <span>⭐️</span>
-                                    <span>{movie.imdbRating}</span>
-                                </p>
-                                <p>
-                                    <span>🌟</span>
-                                    <span>{movie.userRating}</span>
-                                </p>
-                                <p>
-                                    <span>⏳</span>
-                                    <span>{movie.runtime} min</span>
-                                </p>
-                            </div>
-                        </li>
+                        <MovieBox movie={movie} watched={true} />
                     ))}
                 </ul>
             </>

@@ -7,6 +7,6 @@ export interface MovieListProps {
 
 export default function MovieList({movies}: MovieListProps) {
     return <ul className="list">
-        {movies?.map((movie) => <MovieBox movie={movie} />)}
+        {movies?.map((movie) => <MovieBox movie={movie} watched={false} />)}
     </ul>
 }
