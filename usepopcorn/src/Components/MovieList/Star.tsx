@@ -18,7 +18,7 @@ export default function Star({color, onClick, full, onHoverIn, onHoverOut}: Star
         {full ? <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
-            fill="#000"
+            fill={color}
             stroke="#000"
         >
             <path
