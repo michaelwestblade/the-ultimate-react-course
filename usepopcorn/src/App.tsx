@@ -9,6 +9,7 @@ import Main from "./Components/Main";
 import MovieList from "./Components/MovieList/MovieList";
 import WatchedSummary from "./Components/MovieList/WatchedSummary";
 import WatchedMoviesList from "./Components/MovieList/WatchedMoviesList";
+import StarRating from "./Components/MovieList/StarRating";
 
 const tempMovieData = [
     {
@@ -68,6 +69,7 @@ function App() {
                 <Search/>
                 <SearchResults movies={movies}/>
             </NavBar>
+            <StarRating maxStars={10}/>
             <Main>
                 <ListBox>
                     <MovieList movies={movies} />
