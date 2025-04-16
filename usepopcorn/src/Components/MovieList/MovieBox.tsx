@@ -3,10 +3,11 @@ import {Movie} from "./Movie";
 export interface MovieBoxProps {
     movie: Movie
     watched: boolean;
+    handleMovieSelect: (id: string) => void;
 }
 
-export default function MovieBox({movie, watched = false}: MovieBoxProps) {
-    return <li key={movie?.imdbID}>
+export default function MovieBox({movie, watched = false, handleMovieSelect}: MovieBoxProps) {
+    return <li key={movie?.imdbID} onClick={() => handleMovieSelect(movie.imdbID || "")}>
         <img src={movie?.Poster} alt={`${movie?.Title} poster`} />
         <h3>{movie?.Title}</h3>
         {!watched ? <div>

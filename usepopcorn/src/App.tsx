@@ -12,6 +12,7 @@ import WatchedMoviesList from "./Components/MovieList/WatchedMoviesList";
 import StarRating from "./Components/MovieList/StarRating";
 import Loader from "./Components/Loader";
 import ErrorMessage from "./Components/Error";
+import {SelectedMovie} from "./Components/MovieList/SelectedMovie";
 
 const OMDB_API_KEY = process.env.REACT_APP_OMDB_API_KEY;
 
@@ -21,6 +22,15 @@ function App() {
     const [query, setQuery] = useState<string>("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [selectedId, setSelectedId] = useState<string | null>('tt1375666');
+
+    const handleMovieSelect = (id: string) => {
+        setSelectedId((selectedId) => id === selectedId ? null : id);
+    }
+
+    const handleCloseMovie = () => {
+        setSelectedId(null);
+    }
 
     useEffect(() => {
         async function fetchMovies(){
@@ -68,12 +78,16 @@ function App() {
             <Main>
                 <ListBox>
                     {loading && <Loader/>}
-                    {!loading && !error && <MovieList movies={movies} />}
+                    {!loading && !error && <MovieList movies={movies} handleMovieSelect={handleMovieSelect}/>}
                     {error && error !== '' && <ErrorMessage error={error} />}
                 </ListBox>
                 <ListBox>
-                    <WatchedSummary watched={watched} />
-                    <WatchedMoviesList watched={watched} />
+                    {selectedId ?
+                        <SelectedMovie selectedId={selectedId} onCloseMovie={handleCloseMovie}/> :
+                        <>
+                            <WatchedSummary watched={watched} />
+                            <WatchedMoviesList watched={watched} handleMovieSelect={handleMovieSelect}/>
+                        </>}
                 </ListBox>
             </Main>
         </div>
