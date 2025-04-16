@@ -85,7 +85,7 @@ function App() {
                 </ListBox>
                 <ListBox>
                     {selectedId ?
-                        <SelectedMovie onAddWatched={handleAddWatchedMovie} selectedId={selectedId} onCloseMovie={handleCloseMovie}/> :
+                        <SelectedMovie watched={watched.some(_movie => _movie.imdbID === selectedId)} onAddWatched={handleAddWatchedMovie} selectedId={selectedId} onCloseMovie={handleCloseMovie}/> :
                         <>
                             <WatchedSummary watched={watched} />
                             <WatchedMoviesList watched={watched} handleMovieSelect={handleMovieSelect}/>
