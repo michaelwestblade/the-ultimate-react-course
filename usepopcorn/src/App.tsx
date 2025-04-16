@@ -18,7 +18,7 @@ const OMDB_API_KEY = process.env.REACT_APP_OMDB_API_KEY;
 function App() {
     const [movies, setMovies] = useState<Movie[]>([]);
     const [watched, setWatched] = useState<Movie[]>([]);
-    const [query, setQuery] = useState<string>("there");
+    const [query, setQuery] = useState<string>("bldasdasdasdoop");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
@@ -33,6 +33,11 @@ function App() {
                 }
 
                 const data = await res.json();
+
+                if (data.Response === 'False'){
+                    throw new Error(`No movies found for search term ${query}`);
+                }
+
                 setMovies(data.Search);
                 setLoading(false);
             } catch (error: any) {
