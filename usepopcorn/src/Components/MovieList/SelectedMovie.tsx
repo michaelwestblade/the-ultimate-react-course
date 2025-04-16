@@ -31,6 +31,14 @@ export function SelectedMovie({selectedId, onCloseMovie, onAddWatched, watched}:
         Runtime: runtime
     } = movie;
 
+    useEffect(() => {
+        document.title = `${title} (${year})`;
+
+        return () => {
+            document.title = "usePopcorn";
+        }
+    }, [title]);
+
     const handleAdd = () => {
         onAddWatched({...movie, userRating: userRating || 0});
         onCloseMovie();
