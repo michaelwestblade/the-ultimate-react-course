@@ -1,5 +1,7 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import StarRating from "./StarRating";
+import Loader from "../Loader";
+import ErrorMessage from "../Error";
 
 export interface SelectedMovieProps {
     selectedId: string;
@@ -9,6 +11,8 @@ export interface SelectedMovieProps {
 const OMDB_API_KEY = process.env.REACT_APP_OMDB_API_KEY;
 
 export function SelectedMovie({selectedId, onCloseMovie}: SelectedMovieProps) {
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string>("");
     const [movie, setMovie] = useState<{
         Title?: string;
         Year?: number;
@@ -26,6 +30,7 @@ export function SelectedMovie({selectedId, onCloseMovie}: SelectedMovieProps) {
     useEffect(function (){
         async function getMovieDetails() {
             try {
+                setIsLoading(true);
                 const res = await fetch(`https://www.omdbapi.com/?apikey=${OMDB_API_KEY}&i=${selectedId}`);
 
                 if (!res.ok){
@@ -39,7 +44,10 @@ export function SelectedMovie({selectedId, onCloseMovie}: SelectedMovieProps) {
                 }
 
                 setMovie(data);
-            } catch (error) {
+                setIsLoading(false);
+            } catch (error: any) {
+                setIsLoading(false);
+                setError(error.message);
                 console.error(error);
             }
         }
@@ -48,21 +56,25 @@ export function SelectedMovie({selectedId, onCloseMovie}: SelectedMovieProps) {
     }, [selectedId]);
 
     return <div className="details">
-        <header>
-            <button className="btn-back" onClick={onCloseMovie}>&larr;</button>
-            <img src={poster} alt={`${movie?.Title} poster`} />
-            <div className="details-overview">
-                <h2>{title}</h2>
-                <p>{released} &bull; {runtime}</p>
-                <p>{genre}</p>
-                <p><span>⭐️</span>{imdbRating}</p>
-            </div>
-        </header>
-        <section>
-            <StarRating maxStars={10} size={24}/>
-            <p><em>{plot}</em></p>
-            <p>Starring {actors}</p>
-            <p>Directed by {director}</p>
-        </section>
+        {isLoading && <Loader/>}
+        {error && error !== '' && <ErrorMessage error={error} />}
+        {!isLoading && !error && <>
+            <header>
+                <button className="btn-back" onClick={onCloseMovie}>&larr;</button>
+                <img src={poster} alt={`${movie?.Title} poster`} />
+                <div className="details-overview">
+                    <h2>{title}</h2>
+                    <p>{released} &bull; {runtime}</p>
+                    <p>{genre}</p>
+                    <p><span>⭐️</span>{imdbRating}</p>
+                </div>
+            </header>
+            <section>
+                <StarRating maxStars={10} size={24}/>
+                <p><em>{plot}</em></p>
+                <p>Starring {actors}</p>
+                <p>Directed by {director}</p>
+            </section>
+        </>}
     </div>
 }
