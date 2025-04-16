@@ -4,17 +4,18 @@ export interface StarProps {
     onClick: () => void;
     onHoverIn: () => void;
     onHoverOut: () => void;
+    size?: number;
 }
 
-const startStyle = {
-    height: "48px",
-    width: "48px",
-    display: "block",
-    cursor: "pointer"
-}
+export default function Star({color, onClick, full, onHoverIn, onHoverOut, size}: StarProps) {
+    const starStyle = {
+        width: `${size}px`,
+        height: `${size}px`,
+        display: "block",
+        cursor: "pointer",
+    };
 
-export default function Star({color, onClick, full, onHoverIn, onHoverOut}: StarProps) {
-    return  <span role="button" style={startStyle} onClick={onClick} onMouseEnter={onHoverIn} onMouseLeave={onHoverOut}>
+    return  <span role="button" style={starStyle} onClick={onClick} onMouseEnter={onHoverIn} onMouseLeave={onHoverOut}>
         {full ? <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"

@@ -74,7 +74,6 @@ function App() {
                 <Search query={query} setQuery={setQuery} />
                 <SearchResults movies={movies}/>
             </NavBar>
-            <StarRating maxStars={10}/>
             <Main>
                 <ListBox>
                     {loading && <Loader/>}
