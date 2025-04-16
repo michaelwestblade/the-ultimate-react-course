@@ -40,11 +40,13 @@ function App() {
     }
 
     useEffect(() => {
+        const controller = new AbortController();
+
         async function fetchMovies(){
             try {
                 setLoading(true);
                 setError('');
-                const res = await fetch(`https://www.omdbapi.com/?apikey=${OMDB_API_KEY}&s=${query}`);
+                const res = await fetch(`https://www.omdbapi.com/?apikey=${OMDB_API_KEY}&s=${query}`, {signal: controller.signal});
 
                 if (!res.ok){
                     throw new Error("Could not fetch movies");
@@ -72,6 +74,10 @@ function App() {
         }
 
         fetchMovies();
+
+        return () => {
+            controller.abort();
+        }
     }, [query])
 
     return (
