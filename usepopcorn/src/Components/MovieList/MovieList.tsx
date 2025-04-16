@@ -1,8 +1,8 @@
-import {Movie} from "./Movie";
+import {Movie, MovieResponse} from "./Movie";
 import MovieBox from "./MovieBox";
 
 export interface MovieListProps {
-    movies: Movie[];
+    movies: MovieResponse[];
     handleMovieSelect: (id: string) => void;
 }
 

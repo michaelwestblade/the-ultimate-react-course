@@ -1,7 +1,7 @@
-import {Movie} from "../MovieList/Movie";
+import {Movie, MovieResponse} from "../MovieList/Movie";
 
 export interface SearchResultsProps {
-    movies: Movie[];
+    movies: MovieResponse[];
 }
 
 export default function SearchResults({movies}: SearchResultsProps) {

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import NavBar from "./Components/NavBar/NavBar";
 import ListBox from "./Components/MovieList/ListBox";
-import {Movie} from "./Components/MovieList/Movie";
+import {MovieResponse, MovieResponseParsed} from "./Components/MovieList/Movie";
 import Logo from "./Components/NavBar/Logo";
 import Search from "./Components/NavBar/Search";
 import SearchResults from "./Components/NavBar/SearchResults";
@@ -9,7 +9,6 @@ import Main from "./Components/Main";
 import MovieList from "./Components/MovieList/MovieList";
 import WatchedSummary from "./Components/MovieList/WatchedSummary";
 import WatchedMoviesList from "./Components/MovieList/WatchedMoviesList";
-import StarRating from "./Components/MovieList/StarRating";
 import Loader from "./Components/Loader";
 import ErrorMessage from "./Components/Error";
 import {SelectedMovie} from "./Components/MovieList/SelectedMovie";
@@ -17,8 +16,8 @@ import {SelectedMovie} from "./Components/MovieList/SelectedMovie";
 const OMDB_API_KEY = process.env.REACT_APP_OMDB_API_KEY;
 
 function App() {
-    const [movies, setMovies] = useState<Movie[]>([]);
-    const [watched, setWatched] = useState<Movie[]>([]);
+    const [movies, setMovies] = useState<MovieResponse[]>([]);
+    const [watched, setWatched] = useState<MovieResponse[]>([]);
     const [query, setQuery] = useState<string>("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
@@ -30,6 +29,10 @@ function App() {
 
     const handleCloseMovie = () => {
         setSelectedId(null);
+    }
+
+    const handleAddWatchedMovie = (movie: MovieResponse) => {
+        setWatched(watched => [...watched, movie])
     }
 
     useEffect(() => {
@@ -82,7 +85,7 @@ function App() {
                 </ListBox>
                 <ListBox>
                     {selectedId ?
-                        <SelectedMovie selectedId={selectedId} onCloseMovie={handleCloseMovie}/> :
+                        <SelectedMovie onAddWatched={handleAddWatchedMovie} selectedId={selectedId} onCloseMovie={handleCloseMovie}/> :
                         <>
                             <WatchedSummary watched={watched} />
                             <WatchedMoviesList watched={watched} handleMovieSelect={handleMovieSelect}/>

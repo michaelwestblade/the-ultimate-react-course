@@ -5,12 +5,13 @@ export interface StarRatingProps {
     maxStars?: number;
     color?: string;
     size?: number;
+    onSetRating: (value: number) => void;
 }
 
 const containerStyle = {display: 'flex', alignItems: 'center', gap: '16px'};
 const starContainerStyle = {display: 'flex', alignItems: 'center'};
 
-export default function StarRating({maxStars = 10, color = '#fcc419', size = 24}: StarRatingProps) {
+export default function StarRating({maxStars = 10, color = '#fcc419', size = 24, onSetRating}: StarRatingProps) {
     const [rating, setRating] = useState(0);
     const [tempRating, setTempRating] = useState(0);
     const textStyle = {
@@ -22,6 +23,7 @@ export default function StarRating({maxStars = 10, color = '#fcc419', size = 24}
 
     const handleRating = (rating: number) => {
         setRating(rating);
+        onSetRating(rating);
     }
 
     const handleSetTempRating = (rating: number) => {

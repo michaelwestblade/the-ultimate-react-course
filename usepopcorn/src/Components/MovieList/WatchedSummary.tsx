@@ -1,7 +1,7 @@
-import {Movie} from "./Movie";
+import {Movie, MovieResponse} from "./Movie";
 
 export interface WatchedSummaryProps {
-    watched: Movie[];
+    watched: MovieResponse[];
 }
 export default function WatchedSummary({watched}: WatchedSummaryProps) {
     const average = (arr: (number | undefined)[] = []) =>

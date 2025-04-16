@@ -1,7 +1,7 @@
-import {Movie} from "./Movie";
+import {Movie, MovieResponse} from "./Movie";
 
 export interface MovieBoxProps {
-    movie: Movie
+    movie: MovieResponse
     watched: boolean;
     handleMovieSelect: (id: string) => void;
 }
