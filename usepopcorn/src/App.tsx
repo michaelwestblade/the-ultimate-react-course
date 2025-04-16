@@ -11,6 +11,7 @@ import WatchedSummary from "./Components/MovieList/WatchedSummary";
 import WatchedMoviesList from "./Components/MovieList/WatchedMoviesList";
 import StarRating from "./Components/MovieList/StarRating";
 import Loader from "./Components/Loader";
+import ErrorMessage from "./Components/Error";
 
 const OMDB_API_KEY = process.env.REACT_APP_OMDB_API_KEY;
 
@@ -19,14 +20,26 @@ function App() {
     const [watched, setWatched] = useState<Movie[]>([]);
     const [query, setQuery] = useState<string>("there");
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
 
     useEffect(() => {
         async function fetchMovies(){
-            setLoading(true);
-            const res = await fetch(`https://www.omdbapi.com/?apikey=${OMDB_API_KEY}&s=${query}`);
-            const data = await res.json();
-            setMovies(data.Search);
-            setLoading(false);
+            try {
+                setLoading(true);
+                const res = await fetch(`https://www.omdbapi.com/?apikey=${OMDB_API_KEY}&s=${query}`);
+
+                if (!res.ok){
+                    throw new Error("Could not fetch movies");
+                }
+
+                const data = await res.json();
+                setMovies(data.Search);
+                setLoading(false);
+            } catch (error: any) {
+                console.error(error);
+                setError(error?.message);
+                setLoading(false);
+            }
         }
 
         fetchMovies();
@@ -42,7 +55,9 @@ function App() {
             <StarRating maxStars={10}/>
             <Main>
                 <ListBox>
-                    {loading ? <Loader/> : <MovieList movies={movies} />}
+                    {loading && <Loader/>}
+                    {!loading && !error && <MovieList movies={movies} />}
+                    {error && error !== '' && <ErrorMessage error={error} />}
                 </ListBox>
                 <ListBox>
                     <WatchedSummary watched={watched} />
