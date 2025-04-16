@@ -4,9 +4,10 @@ export interface MovieBoxProps {
     movie: MovieResponse
     watched: boolean;
     handleMovieSelect: (id: string) => void;
+    onDeleteWatchedMovie: (id: string) => void;
 }
 
-export default function MovieBox({movie, watched = false, handleMovieSelect}: MovieBoxProps) {
+export default function MovieBox({movie, watched = false, handleMovieSelect, onDeleteWatchedMovie}: MovieBoxProps) {
     return <li key={movie?.imdbID} onClick={() => handleMovieSelect(movie.imdbID || "")}>
         <img src={movie?.Poster} alt={`${movie?.Title} poster`} />
         <h3>{movie?.Title}</h3>
@@ -28,6 +29,7 @@ export default function MovieBox({movie, watched = false, handleMovieSelect}: Mo
                 <span>⏳</span>
                 <span>{movie.runtime} min</span>
             </p>
+            <button onClick={() => onDeleteWatchedMovie(movie?.imdbID || "")} className="btn-delete">X</button>
         </div>}
     </li>
 }
