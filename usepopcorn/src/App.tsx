@@ -18,7 +18,7 @@ const OMDB_API_KEY = process.env.REACT_APP_OMDB_API_KEY;
 function App() {
     const [movies, setMovies] = useState<Movie[]>([]);
     const [watched, setWatched] = useState<Movie[]>([]);
-    const [query, setQuery] = useState<string>("bldasdasdasdoop");
+    const [query, setQuery] = useState<string>("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
@@ -26,6 +26,7 @@ function App() {
         async function fetchMovies(){
             try {
                 setLoading(true);
+                setError('');
                 const res = await fetch(`https://www.omdbapi.com/?apikey=${OMDB_API_KEY}&s=${query}`);
 
                 if (!res.ok){
@@ -47,6 +48,12 @@ function App() {
             }
         }
 
+        if (query.length < 3){
+            setMovies([]);
+            setError('');
+            return;
+        }
+
         fetchMovies();
     }, [query])
 
@@ -54,7 +61,7 @@ function App() {
         <div className="App">
             <NavBar>
                 <Logo/>
-                <Search/>
+                <Search query={query} setQuery={setQuery} />
                 <SearchResults movies={movies}/>
             </NavBar>
             <StarRating maxStars={10}/>
