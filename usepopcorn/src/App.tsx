@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import NavBar from "./Components/NavBar/NavBar";
 import ListBox from "./Components/MovieList/ListBox";
-import {MovieResponse, MovieResponseParsed} from "./Components/MovieList/Movie";
+import {MovieResponse} from "./Components/MovieList/Movie";
 import Logo from "./Components/NavBar/Logo";
 import Search from "./Components/NavBar/Search";
 import SearchResults from "./Components/NavBar/SearchResults";
@@ -12,16 +12,14 @@ import WatchedMoviesList from "./Components/MovieList/WatchedMoviesList";
 import Loader from "./Components/Loader";
 import ErrorMessage from "./Components/Error";
 import {SelectedMovie} from "./Components/MovieList/SelectedMovie";
-
-const OMDB_API_KEY = process.env.REACT_APP_OMDB_API_KEY;
+import {useMovies} from "./Hooks/useMovies";
 
 function App() {
-    const [movies, setMovies] = useState<MovieResponse[]>([]);
     const [watched, setWatched] = useState<MovieResponse[]>([]);
     const [query, setQuery] = useState<string>("");
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState("");
     const [selectedId, setSelectedId] = useState<string | null>('tt1375666');
+
+    const [movies, loading, error] = useMovies(query);
 
     const handleMovieSelect = (id: string) => {
         setSelectedId((selectedId) => id === selectedId ? null : id);
@@ -38,47 +36,6 @@ function App() {
     const onDeleteWatchedMovie = (id: string) => {
         setWatched(watched => watched.filter(movie => movie.imdbID !== id));
     }
-
-    useEffect(() => {
-        const controller = new AbortController();
-
-        async function fetchMovies(){
-            try {
-                setLoading(true);
-                setError('');
-                const res = await fetch(`https://www.omdbapi.com/?apikey=${OMDB_API_KEY}&s=${query}`, {signal: controller.signal});
-
-                if (!res.ok){
-                    throw new Error("Could not fetch movies");
-                }
-
-                const data = await res.json();
-
-                if (data.Response === 'False'){
-                    throw new Error(`No movies found for search term ${query}`);
-                }
-
-                setMovies(data.Search);
-                setLoading(false);
-            } catch (error: any) {
-                console.error(error);
-                setError(error?.message);
-                setLoading(false);
-            }
-        }
-
-        if (query.length < 3){
-            setMovies([]);
-            setError('');
-            return;
-        }
-
-        fetchMovies();
-
-        return () => {
-            controller.abort();
-        }
-    }, [query])
 
     return (
         <div className="App">
