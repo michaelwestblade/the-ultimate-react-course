@@ -19,8 +19,6 @@ function App() {
     const [query, setQuery] = useState<string>("");
     const [selectedId, setSelectedId] = useState<string | null>('tt1375666');
 
-    const [movies, loading, error] = useMovies(query);
-
     const handleMovieSelect = (id: string) => {
         setSelectedId((selectedId) => id === selectedId ? null : id);
     }
@@ -36,6 +34,8 @@ function App() {
     const onDeleteWatchedMovie = (id: string) => {
         setWatched(watched => watched.filter(movie => movie.imdbID !== id));
     }
+
+    const [movies, loading, error] = useMovies(query, handleCloseMovie);
 
     return (
         <div className="App">
