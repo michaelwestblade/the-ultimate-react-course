@@ -1,10 +1,10 @@
 import React from 'react';
-import DateCounter from "./Components/DateCounter";
+import Header from "./Components/Header";
 
 function App() {
   return (
     <div className="App">
-      <DateCounter/>
+      <Header/>
     </div>
   );
 }
