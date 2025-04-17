@@ -3,7 +3,7 @@ import {MovieResponse} from "../Components/MovieList/Movie";
 
 const OMDB_API_KEY = process.env.REACT_APP_OMDB_API_KEY;
 
-export function useMovies(query: string, callback?: () => void): [MovieResponse[], boolean, string] {
+export function useMovies(query: string, onSuccess?: () => void): [MovieResponse[], boolean, string] {
     const [movies, setMovies] = useState<MovieResponse[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
@@ -43,7 +43,7 @@ export function useMovies(query: string, callback?: () => void): [MovieResponse[
         }
 
         fetchMovies();
-        callback?.();
+        onSuccess?.();
 
         return () => {
             controller.abort();
