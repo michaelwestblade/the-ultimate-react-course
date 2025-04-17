@@ -9,6 +9,6 @@ export interface MovieListProps {
 
 export default function MovieList({movies, handleMovieSelect, onDeleteWatchedMovie}: MovieListProps) {
     return <ul className="list list-movies">
-        {movies?.map((movie) => <MovieBox onDeleteWatchedMovie={onDeleteWatchedMovie} movie={movie} watched={false} handleMovieSelect={handleMovieSelect} />)}
+        {movies?.map((movie) => <MovieBox key={movie.imdbID} onDeleteWatchedMovie={onDeleteWatchedMovie} movie={movie} watched={false} handleMovieSelect={handleMovieSelect} />)}
     </ul>
 }

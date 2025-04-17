@@ -39,6 +39,8 @@ export function SelectedMovie({selectedId, onCloseMovie, onAddWatched, watched}:
         }
     }, [title]);
 
+    const [avgRating, setAvgRating] = useState<number>(0);
+
     const handleAdd = () => {
         onAddWatched({...movie, userRating: userRating || 0});
         onCloseMovie();
@@ -86,6 +88,9 @@ export function SelectedMovie({selectedId, onCloseMovie, onAddWatched, watched}:
                     <p><span>⭐️</span>{imdbRating}</p>
                 </div>
             </header>
+
+            <p>{avgRating}</p>
+
             <section>
                 <div className="rating">
                     {!watched ?
