@@ -13,9 +13,10 @@ import Loader from "./Components/Loader";
 import ErrorMessage from "./Components/Error";
 import {SelectedMovie} from "./Components/MovieList/SelectedMovie";
 import {useMovies} from "./Hooks/useMovies";
+import {useLocalStorage} from "./Hooks/useLocalStorage";
 
 function App() {
-    const [watched, setWatched] = useState<MovieResponse[]>([]);
+    const [watched, setWatched] = useLocalStorage<MovieResponse[]>('watched', [])
     const [query, setQuery] = useState<string>("");
     const [selectedId, setSelectedId] = useState<string | null>('tt1375666');
 
@@ -28,11 +29,11 @@ function App() {
     }
 
     const handleAddWatchedMovie = (movie: MovieResponse) => {
-        setWatched(watched => [...watched, movie])
+        setWatched((watched: any) => [...watched, movie])
     }
 
     const onDeleteWatchedMovie = (id: string) => {
-        setWatched(watched => watched.filter(movie => movie.imdbID !== id));
+        setWatched((watched: MovieResponse[]) => watched.filter(movie => movie.imdbID !== id));
     }
 
     const [movies, loading, error] = useMovies(query, handleCloseMovie);
