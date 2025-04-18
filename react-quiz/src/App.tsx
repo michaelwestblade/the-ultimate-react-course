@@ -2,66 +2,11 @@ import React, { useEffect, useReducer } from "react";
 import Header from "./Components/Header";
 import Error from "./Components/Error";
 import Main from "./Main";
-import { QuestionInterface, Status } from "./const";
+import { AppActionTypes, QuestionInterface, Status } from "./const";
 import Loader from "./Components/Loader";
 import StartScreen from "./Components/StartScreen";
 import Question from "./Components/Question/Question";
-
-enum AppActionTypes {
-  DATA_RECEIVED = "DATA_RECEIVED",
-  DATA_FAILED = "DATA_FAILED",
-  START = "START",
-  NEW_ANSWER = "NEW_ANSWER"
-}
-
-export interface AppState {
-  questions: [];
-  status: Status;
-  index: number;
-  answer?: number;
-  points: number;
-}
-
-const initialState: AppState = {
-  questions: [],
-  status: Status.LOADING,
-  index: 0,
-  answer: undefined,
-  points: 0
-};
-
-const reducer = (
-  currentState = initialState,
-  action: { type: string; payload: any }
-): AppState => {
-  switch (action.type) {
-    case AppActionTypes.DATA_RECEIVED:
-      return {
-        ...currentState,
-        questions: action.payload,
-        status: Status.READY
-      };
-    case AppActionTypes.DATA_FAILED:
-      return { ...currentState, status: Status.ERROR };
-    case AppActionTypes.START:
-      return { ...currentState, status: Status.ACTIVE, index: 0 };
-    case AppActionTypes.NEW_ANSWER:
-      const currentQuestion: QuestionInterface =
-        currentState.questions[currentState.index];
-      const correctAnswer =
-        currentQuestion && action.payload === currentQuestion?.correctOption;
-      const points = correctAnswer ? currentQuestion.points : 0;
-      return {
-        ...currentState,
-        answer: action.payload,
-        points: currentState.points + points
-      };
-    default:
-      return currentState;
-  }
-
-  return currentState;
-};
+import { initialState, reducer } from "./Components/appReducer";
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
