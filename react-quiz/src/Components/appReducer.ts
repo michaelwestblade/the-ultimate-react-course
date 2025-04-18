@@ -37,6 +37,16 @@ export const reducer = (
       const correctAnswer =
         currentQuestion && action.payload === currentQuestion?.correctOption;
       const points = correctAnswer ? currentQuestion.points : 0;
+
+      if (currentState.index === currentState.questions.length - 1) {
+        return {
+          ...currentState,
+          answer: action.payload,
+          points: currentState.points + points,
+          status: Status.FINISHED
+        };
+      }
+
       return {
         ...currentState,
         answer: action.payload,

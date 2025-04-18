@@ -9,6 +9,7 @@ import Question from "./Components/Question/Question";
 import { initialState, reducer } from "./Components/appReducer";
 import NextButton from "./Components/Question/NextButton";
 import Progress from "./Components/Layout/Progress";
+import FinishScreen from "./Components/Layout/FinishScreen";
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -78,6 +79,9 @@ function App() {
               />
             )}
           </>
+        )}
+        {status === Status.FINISHED && (
+          <FinishScreen points={points} maxPoints={totalPoints} />
         )}
         {status === Status.ERROR && <Error />}
       </Main>
