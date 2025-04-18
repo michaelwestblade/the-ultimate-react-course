@@ -11,7 +11,7 @@ enum AppActionTypes {
   DATA_RECEIVED = "DATA_RECEIVED",
   DATA_FAILED = "DATA_FAILED",
   START = "START",
-  NEW_ANSWER = "NEW_ANWER"
+  NEW_ANSWER = "NEW_ANSWER"
 }
 
 export interface AppState {
@@ -19,13 +19,15 @@ export interface AppState {
   status: Status;
   index: number;
   answer?: number;
+  points: number;
 }
 
 const initialState: AppState = {
   questions: [],
   status: Status.LOADING,
   index: 0,
-  answer: undefined
+  answer: undefined,
+  points: 0
 };
 
 const reducer = (
@@ -44,7 +46,16 @@ const reducer = (
     case AppActionTypes.START:
       return { ...currentState, status: Status.ACTIVE, index: 0 };
     case AppActionTypes.NEW_ANSWER:
-      return { ...currentState, answer: action.payload };
+      const currentQuestion: QuestionInterface =
+        currentState.questions[currentState.index];
+      const correctAnswer =
+        currentQuestion && action.payload === currentQuestion?.correctOption;
+      const points = correctAnswer ? currentQuestion.points : 0;
+      return {
+        ...currentState,
+        answer: action.payload,
+        points: currentState.points + points
+      };
     default:
       return currentState;
   }
@@ -53,10 +64,9 @@ const reducer = (
 };
 
 function App() {
-  const [{ questions, status, index, answer }, dispatch] = useReducer(
-    reducer,
-    initialState
-  );
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const { questions, status, index, answer, points } = state;
 
   const numberOfQuestions = questions.length;
 
