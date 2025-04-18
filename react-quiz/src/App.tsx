@@ -33,6 +33,10 @@ function App() {
     dispatch({ type: AppActionTypes.NEXT_QUESTION, payload: index });
   };
 
+  const handleRestart = () => {
+    dispatch({ type: AppActionTypes.START, payload: status });
+  };
+
   useEffect(() => {
     async function fetchQuestions() {
       try {
@@ -81,7 +85,11 @@ function App() {
           </>
         )}
         {status === Status.FINISHED && (
-          <FinishScreen points={points} maxPoints={totalPoints} />
+          <FinishScreen
+            handleRestart={handleRestart}
+            points={points}
+            maxPoints={totalPoints}
+          />
         )}
         {status === Status.ERROR && <Error />}
       </Main>

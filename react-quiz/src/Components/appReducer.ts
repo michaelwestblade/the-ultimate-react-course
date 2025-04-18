@@ -24,13 +24,20 @@ export const reducer = (
     case AppActionTypes.DATA_RECEIVED:
       return {
         ...currentState,
+        ...currentState,
         questions: action.payload,
         status: Status.READY
       };
     case AppActionTypes.DATA_FAILED:
       return { ...currentState, status: Status.ERROR };
     case AppActionTypes.START:
-      return { ...currentState, status: Status.ACTIVE, index: 0 };
+      return {
+        ...currentState,
+        status: Status.ACTIVE,
+        index: 0,
+        answer: undefined,
+        points: 0
+      };
     case AppActionTypes.NEW_ANSWER:
       const currentQuestion: QuestionInterface =
         currentState.questions[currentState.index];
