@@ -5,10 +5,12 @@ import Main from "./Main";
 import { Status } from "./const";
 import Loader from "./Components/Loader";
 import StartScreen from "./Components/StartScreen";
+import Question from "./Components/Question";
 
 enum AppActionTypes {
   DATA_RECEIVED = "DATA_RECEIVED",
-  DATA_FAILED = "DATA_FAILED"
+  DATA_FAILED = "DATA_FAILED",
+  START = "START"
 }
 
 export interface AppState {
@@ -34,6 +36,8 @@ const reducer = (
       };
     case AppActionTypes.DATA_FAILED:
       return { ...currentState, status: Status.ERROR };
+    case AppActionTypes.START:
+      return { ...currentState, status: Status.ACTIVE };
     default:
       return currentState;
   }
@@ -45,6 +49,10 @@ function App() {
   const [{ questions, status }, dispatch] = useReducer(reducer, initialState);
 
   const numberOfQuestions = questions.length;
+
+  const handleStartQuiz = () => {
+    dispatch({ type: AppActionTypes.START, payload: status });
+  };
 
   useEffect(() => {
     async function fetchQuestions() {
@@ -68,8 +76,12 @@ function App() {
       <Main>
         {status === Status.LOADING && <Loader />}
         {status === Status.READY && (
-          <StartScreen numberOfQuestions={numberOfQuestions} />
+          <StartScreen
+            numberOfQuestions={numberOfQuestions}
+            handleStartQuiz={handleStartQuiz}
+          />
         )}
+        {status === Status.ACTIVE && <Question />}
         {status === Status.ERROR && <Error />}
       </Main>
     </div>
