@@ -4,6 +4,7 @@ import Error from "./Components/Error";
 import Main from "./Main";
 import { Status } from "./const";
 import Loader from "./Components/Loader";
+import StartScreen from "./Components/StartScreen";
 
 enum AppActionTypes {
   DATA_RECEIVED = "DATA_RECEIVED",
@@ -43,6 +44,8 @@ const reducer = (
 function App() {
   const [{ questions, status }, dispatch] = useReducer(reducer, initialState);
 
+  const numberOfQuestions = questions.length;
+
   useEffect(() => {
     async function fetchQuestions() {
       try {
@@ -64,7 +67,9 @@ function App() {
 
       <Main>
         {status === Status.LOADING && <Loader />}
-        {status === Status.READY && <p>READY</p>}
+        {status === Status.READY && (
+          <StartScreen numberOfQuestions={numberOfQuestions} />
+        )}
         {status === Status.ERROR && <Error />}
       </Main>
     </div>
