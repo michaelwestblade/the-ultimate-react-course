@@ -13,7 +13,6 @@ export default function Question({
   answer
 }: QuestionProps) {
   const correctAnswer = question.correctOption;
-  const questionCorrect = answer && answer == correctAnswer;
   return (
     <div>
       <h4>{question.question}</h4>

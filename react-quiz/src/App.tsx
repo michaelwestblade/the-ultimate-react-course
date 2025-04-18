@@ -7,6 +7,7 @@ import Loader from "./Components/Loader";
 import StartScreen from "./Components/StartScreen";
 import Question from "./Components/Question/Question";
 import { initialState, reducer } from "./Components/appReducer";
+import NextButton from "./Components/Question/NextButton";
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -21,6 +22,10 @@ function App() {
 
   const handleQuestionAnswer = (answer: number) => {
     dispatch({ type: AppActionTypes.NEW_ANSWER, payload: answer });
+  };
+
+  const handleNextQuestion = () => {
+    dispatch({ type: AppActionTypes.NEXT_QUESTION, payload: index });
   };
 
   useEffect(() => {
@@ -51,11 +56,17 @@ function App() {
           />
         )}
         {status === Status.ACTIVE && (
-          <Question
-            handleQuestionAnswer={handleQuestionAnswer}
-            question={questions[index]}
-            answer={answer}
-          />
+          <>
+            <Question
+              handleQuestionAnswer={handleQuestionAnswer}
+              question={questions[index]}
+              answer={answer}
+            />
+            <NextButton
+              handleNextQuestion={handleNextQuestion}
+              answer={answer}
+            />
+          </>
         )}
         {status === Status.ERROR && <Error />}
       </Main>

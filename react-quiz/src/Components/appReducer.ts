@@ -42,6 +42,12 @@ export const reducer = (
         answer: action.payload,
         points: currentState.points + points
       };
+    case AppActionTypes.NEXT_QUESTION:
+      return {
+        ...currentState,
+        index: currentState.index + 1,
+        answer: undefined
+      };
     default:
       return currentState;
   }
