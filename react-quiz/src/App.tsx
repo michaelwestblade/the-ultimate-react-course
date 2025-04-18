@@ -10,19 +10,22 @@ import Question from "./Components/Question/Question";
 enum AppActionTypes {
   DATA_RECEIVED = "DATA_RECEIVED",
   DATA_FAILED = "DATA_FAILED",
-  START = "START"
+  START = "START",
+  NEW_ANSWER = "NEW_ANWER"
 }
 
 export interface AppState {
   questions: [];
   status: Status;
   index: number;
+  answer?: number;
 }
 
 const initialState: AppState = {
   questions: [],
   status: Status.LOADING,
-  index: 0
+  index: 0,
+  answer: undefined
 };
 
 const reducer = (
@@ -40,6 +43,8 @@ const reducer = (
       return { ...currentState, status: Status.ERROR };
     case AppActionTypes.START:
       return { ...currentState, status: Status.ACTIVE, index: 0 };
+    case AppActionTypes.NEW_ANSWER:
+      return { ...currentState, answer: action.payload };
     default:
       return currentState;
   }
@@ -48,7 +53,7 @@ const reducer = (
 };
 
 function App() {
-  const [{ questions, status, index }, dispatch] = useReducer(
+  const [{ questions, status, index, answer }, dispatch] = useReducer(
     reducer,
     initialState
   );
@@ -57,6 +62,10 @@ function App() {
 
   const handleStartQuiz = () => {
     dispatch({ type: AppActionTypes.START, payload: status });
+  };
+
+  const handleQuestionAnswer = (answer: number) => {
+    dispatch({ type: AppActionTypes.NEW_ANSWER, payload: answer });
   };
 
   useEffect(() => {
@@ -86,7 +95,13 @@ function App() {
             handleStartQuiz={handleStartQuiz}
           />
         )}
-        {status === Status.ACTIVE && <Question question={questions[index]} />}
+        {status === Status.ACTIVE && (
+          <Question
+            handleQuestionAnswer={handleQuestionAnswer}
+            question={questions[index]}
+            answer={answer}
+          />
+        )}
         {status === Status.ERROR && <Error />}
       </Main>
     </div>

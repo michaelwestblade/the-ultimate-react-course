@@ -2,20 +2,26 @@ import { QuestionInterface } from "../../const";
 
 export interface OptionsProps {
   options: string[];
-  handleQuestionAnswer: (answer: string) => void;
+  handleQuestionAnswer: (answer: number) => void;
+  correctAnswer: number;
+  answer?: number;
 }
 
 export default function Options({
   options,
-  handleQuestionAnswer
+  handleQuestionAnswer,
+  answer,
+  correctAnswer
 }: OptionsProps) {
+  const hasAnswered = typeof answer !== "undefined";
   return (
     <div className="options">
-      {options.map((option) => (
+      {options.map((option, index) => (
         <button
-          onClick={() => handleQuestionAnswer(option)}
+          onClick={() => handleQuestionAnswer(index)}
           key={option}
-          className="btn btn-option"
+          disabled={typeof answer !== "undefined"}
+          className={`btn btn-option ${index === answer ? "answer" : ""} ${hasAnswered ? (index === correctAnswer ? "correct" : "wrong") : ""}`}
         >
           {option}
         </button>
