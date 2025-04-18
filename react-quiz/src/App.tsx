@@ -10,6 +10,8 @@ import { initialState, reducer } from "./Components/appReducer";
 import NextButton from "./Components/Question/NextButton";
 import Progress from "./Components/Layout/Progress";
 import FinishScreen from "./Components/Layout/FinishScreen";
+import Footer from "./Components/Layout/Footer";
+import Timer from "./Components/Layout/Timer";
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -76,12 +78,15 @@ function App() {
               question={questions[index]}
               answer={answer}
             />
-            {index + 1 < numberOfQuestions && (
-              <NextButton
-                handleNextQuestion={handleNextQuestion}
-                answer={answer}
-              />
-            )}
+            <Footer>
+              <Timer />
+              {index + 1 < numberOfQuestions && (
+                <NextButton
+                  handleNextQuestion={handleNextQuestion}
+                  answer={answer}
+                />
+              )}
+            </Footer>
           </>
         )}
         {status === Status.FINISHED && (
