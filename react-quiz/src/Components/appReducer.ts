@@ -1,7 +1,7 @@
 import { AppActionTypes, QuestionInterface, Status } from "../const";
 
 export interface AppState {
-  questions: [];
+  questions: QuestionInterface[];
   status: Status;
   index: number;
   answer?: number;
@@ -9,7 +9,7 @@ export interface AppState {
 }
 
 export const initialState: AppState = {
-  questions: [],
+  questions: [] as QuestionInterface[],
   status: Status.LOADING,
   index: 0,
   answer: undefined,

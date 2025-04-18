@@ -1,13 +1,14 @@
 import React, { useEffect, useReducer } from "react";
-import Header from "./Components/Header";
+import Header from "./Components/Layout/Header";
 import Error from "./Components/Error";
 import Main from "./Main";
 import { AppActionTypes, QuestionInterface, Status } from "./const";
 import Loader from "./Components/Loader";
-import StartScreen from "./Components/StartScreen";
+import StartScreen from "./Components/Layout/StartScreen";
 import Question from "./Components/Question/Question";
 import { initialState, reducer } from "./Components/appReducer";
 import NextButton from "./Components/Question/NextButton";
+import Progress from "./Components/Layout/Progress";
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -15,6 +16,9 @@ function App() {
   const { questions, status, index, answer, points } = state;
 
   const numberOfQuestions = questions.length;
+  const totalPoints = questions.reduce((total, question) => {
+    return total + question.points;
+  }, 0);
 
   const handleStartQuiz = () => {
     dispatch({ type: AppActionTypes.START, payload: status });
@@ -46,7 +50,6 @@ function App() {
   return (
     <div className="App">
       <Header />
-
       <Main>
         {status === Status.LOADING && <Loader />}
         {status === Status.READY && (
@@ -57,15 +60,23 @@ function App() {
         )}
         {status === Status.ACTIVE && (
           <>
+            <Progress
+              numberOfQuestions={numberOfQuestions}
+              currentQuestion={index + 1}
+              points={points}
+              totalPoints={totalPoints}
+            />
             <Question
               handleQuestionAnswer={handleQuestionAnswer}
               question={questions[index]}
               answer={answer}
             />
-            <NextButton
-              handleNextQuestion={handleNextQuestion}
-              answer={answer}
-            />
+            {index + 1 < numberOfQuestions && (
+              <NextButton
+                handleNextQuestion={handleNextQuestion}
+                answer={answer}
+              />
+            )}
           </>
         )}
         {status === Status.ERROR && <Error />}
