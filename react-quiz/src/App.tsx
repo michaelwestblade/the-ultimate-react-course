@@ -2,10 +2,10 @@ import React, { useEffect, useReducer } from "react";
 import Header from "./Components/Header";
 import Error from "./Components/Error";
 import Main from "./Main";
-import { Status } from "./const";
+import { QuestionInterface, Status } from "./const";
 import Loader from "./Components/Loader";
 import StartScreen from "./Components/StartScreen";
-import Question from "./Components/Question";
+import Question from "./Components/Question/Question";
 
 enum AppActionTypes {
   DATA_RECEIVED = "DATA_RECEIVED",
@@ -16,11 +16,13 @@ enum AppActionTypes {
 export interface AppState {
   questions: [];
   status: Status;
+  index: number;
 }
 
 const initialState: AppState = {
   questions: [],
-  status: Status.LOADING
+  status: Status.LOADING,
+  index: 0
 };
 
 const reducer = (
@@ -37,7 +39,7 @@ const reducer = (
     case AppActionTypes.DATA_FAILED:
       return { ...currentState, status: Status.ERROR };
     case AppActionTypes.START:
-      return { ...currentState, status: Status.ACTIVE };
+      return { ...currentState, status: Status.ACTIVE, index: 0 };
     default:
       return currentState;
   }
@@ -46,7 +48,10 @@ const reducer = (
 };
 
 function App() {
-  const [{ questions, status }, dispatch] = useReducer(reducer, initialState);
+  const [{ questions, status, index }, dispatch] = useReducer(
+    reducer,
+    initialState
+  );
 
   const numberOfQuestions = questions.length;
 
@@ -58,7 +63,7 @@ function App() {
     async function fetchQuestions() {
       try {
         const res = await fetch("http://localhost:9000/questions");
-        const data = await res.json();
+        const data: QuestionInterface[] = await res.json();
         dispatch({ type: AppActionTypes.DATA_RECEIVED, payload: data });
       } catch (error) {
         console.log(error);
@@ -81,7 +86,7 @@ function App() {
             handleStartQuiz={handleStartQuiz}
           />
         )}
-        {status === Status.ACTIVE && <Question />}
+        {status === Status.ACTIVE && <Question question={questions[index]} />}
         {status === Status.ERROR && <Error />}
       </Main>
     </div>
