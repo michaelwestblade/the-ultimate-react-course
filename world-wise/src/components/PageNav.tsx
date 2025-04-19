@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export default function PageNav() {
   const links = [
@@ -11,7 +11,7 @@ export default function PageNav() {
       <ul>
         {links.map((link) => (
           <li key={link.path}>
-            <Link to={link.path}>{link.title}</Link>
+            <NavLink to={link.path}>{link.title}</NavLink>
           </li>
         ))}
       </ul>
