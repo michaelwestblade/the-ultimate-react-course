@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import styles from './PageNav.module.css';
 
 export default function PageNav() {
   const links = [
@@ -7,7 +8,7 @@ export default function PageNav() {
     { path: '/pricing', title: 'Pricing' },
   ];
   return (
-    <nav>
+    <nav className={styles.nav}>
       <ul>
         {links.map((link) => (
           <li key={link.path}>
