@@ -1,3 +1,10 @@
+import PageNav from '../components/PageNav.tsx';
+
 export default function NotFoundPage() {
-  return <div>404</div>;
+  return (
+    <div>
+      <PageNav />
+      <h1>404</h1>
+    </div>
+  );
 }
