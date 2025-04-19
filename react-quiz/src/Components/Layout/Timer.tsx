@@ -6,6 +6,8 @@ export interface TimerProps {
 }
 
 export default function Timer({ handleTick, secondsRemaining }: TimerProps) {
+  const minutes = Math.floor(secondsRemaining / 60);
+  const seconds = secondsRemaining % 60;
   useEffect(() => {
     const intervalId = setInterval(function () {
       handleTick();
@@ -13,5 +15,9 @@ export default function Timer({ handleTick, secondsRemaining }: TimerProps) {
 
     return () => clearInterval(intervalId);
   }, [handleTick]);
-  return <div className="timer">{secondsRemaining}</div>;
+  return (
+    <div className="timer">
+      {minutes}:{seconds}
+    </div>
+  );
 }
