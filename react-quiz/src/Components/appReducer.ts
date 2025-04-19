@@ -15,7 +15,7 @@ export const initialState: AppState = {
   index: 0,
   answer: undefined,
   points: 0,
-  secondsRemaining: 60
+  secondsRemaining: 0
 };
 
 export const reducer = (
@@ -39,7 +39,7 @@ export const reducer = (
         index: 0,
         answer: undefined,
         points: 0,
-        secondsRemaining: 60
+        secondsRemaining: currentState.questions.length * 30
       };
     case AppActionTypes.NEW_ANSWER:
       const currentQuestion: QuestionInterface =
