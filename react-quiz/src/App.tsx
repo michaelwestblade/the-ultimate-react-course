@@ -16,7 +16,7 @@ import Timer from "./Components/Layout/Timer";
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const { questions, status, index, answer, points } = state;
+  const { questions, status, index, answer, points, secondsRemaining } = state;
 
   const numberOfQuestions = questions.length;
   const totalPoints = questions.reduce((total, question) => {
@@ -37,6 +37,10 @@ function App() {
 
   const handleRestart = () => {
     dispatch({ type: AppActionTypes.START, payload: status });
+  };
+
+  const handleTick = () => {
+    dispatch({ type: AppActionTypes.TICK, payload: 1 });
   };
 
   useEffect(() => {
@@ -79,7 +83,10 @@ function App() {
               answer={answer}
             />
             <Footer>
-              <Timer />
+              <Timer
+                handleTick={handleTick}
+                secondsRemaining={secondsRemaining}
+              />
               {index + 1 < numberOfQuestions && (
                 <NextButton
                   handleNextQuestion={handleNextQuestion}

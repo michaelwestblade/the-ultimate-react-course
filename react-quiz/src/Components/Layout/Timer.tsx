@@ -1,5 +1,17 @@
-export interface TimerProps {}
+import { useEffect } from "react";
 
-export default function Timer(props: TimerProps) {
-  return <div className="timer">05:00</div>;
+export interface TimerProps {
+  handleTick: () => void;
+  secondsRemaining: number;
+}
+
+export default function Timer({ handleTick, secondsRemaining }: TimerProps) {
+  useEffect(() => {
+    const intervalId = setInterval(function () {
+      handleTick();
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [handleTick]);
+  return <div className="timer">{secondsRemaining}</div>;
 }

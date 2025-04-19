@@ -6,6 +6,7 @@ export interface AppState {
   index: number;
   answer?: number;
   points: number;
+  secondsRemaining: number;
 }
 
 export const initialState: AppState = {
@@ -13,7 +14,8 @@ export const initialState: AppState = {
   status: Status.LOADING,
   index: 0,
   answer: undefined,
-  points: 0
+  points: 0,
+  secondsRemaining: 60
 };
 
 export const reducer = (
@@ -36,7 +38,8 @@ export const reducer = (
         status: Status.ACTIVE,
         index: 0,
         answer: undefined,
-        points: 0
+        points: 0,
+        secondsRemaining: 60
       };
     case AppActionTypes.NEW_ANSWER:
       const currentQuestion: QuestionInterface =
@@ -64,6 +67,14 @@ export const reducer = (
         ...currentState,
         index: currentState.index + 1,
         answer: undefined
+      };
+    case AppActionTypes.TICK:
+      const secondsRemaining = currentState.secondsRemaining - 1;
+
+      return {
+        ...currentState,
+        secondsRemaining: currentState.secondsRemaining - 1,
+        status: secondsRemaining === 0 ? Status.FINISHED : currentState.status
       };
     default:
       return currentState;
