@@ -17,7 +17,9 @@ export default function Timer({ handleTick, secondsRemaining }: TimerProps) {
   }, [handleTick]);
   return (
     <div className="timer">
-      {minutes}:{seconds}
+      {minutes < 10 && "0"}
+      {minutes}:{seconds < 10 && "0"}
+      {seconds}
     </div>
   );
 }
