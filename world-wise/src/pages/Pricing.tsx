@@ -1,10 +1,12 @@
 import styles from './Product.module.css';
+import PageNav from '../components/PageNav.tsx';
 
 export interface PricingPageProps {}
 
 export default function PricingPage() {
   return (
     <main className={styles.product}>
+      <PageNav />
       <section>
         <div>
           <h2>

@@ -4,6 +4,7 @@ import HomePage from './pages/Home.tsx';
 import PricingPage from './pages/Pricing.tsx';
 import NotFoundPage from './pages/NotFoundPage.tsx';
 import AppLayout from './pages/AppLayout.tsx';
+import Login from './pages/Login.tsx';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="product" element={<ProductPage />} />
         <Route path="pricing" element={<PricingPage />} />
         <Route path="app" element={<AppLayout />} />
+        <Route path="login" element={<Login />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
