@@ -1,6 +1,6 @@
 import styles from './City.module.css';
 import BackButton from './BackButton.tsx';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 const formatDate = (date?: string) =>
   new Intl.DateTimeFormat('en', {
@@ -11,6 +11,10 @@ const formatDate = (date?: string) =>
   }).format(new Date(date || ''));
 
 function City() {
+  const [searchParams] = useSearchParams();
+  const lat = searchParams.get('lat');
+  const lng = searchParams.get('lng');
+
   const { id } = useParams();
   console.log(id);
 
@@ -29,7 +33,7 @@ function City() {
       <div className={styles.row}>
         <h6>City name</h6>
         <h3>
-          <span>{emoji}</span> {cityName}
+          <span>{emoji}</span> {cityName} (Lat: {lat}, Lng: {lng})
         </h3>
       </div>
 

@@ -9,6 +9,7 @@ import CityList from './components/CityList.tsx';
 import { useEffect, useState } from 'react';
 import CountryList from './components/CountriesList.tsx';
 import City from './components/City.tsx';
+import Form from './components/Form.tsx';
 
 function App() {
   const [cities, setCities] = useState([]);
@@ -54,7 +55,7 @@ function App() {
               <CountryList cities={cities} loading={loading} error={error} />
             }
           />
-          <Route path="form" element={<p>FORM</p>} />
+          <Route path="form" element={<Form />} />
         </Route>
         <Route path="login" element={<Login />} />
         <Route path="*" element={<NotFoundPage />} />
