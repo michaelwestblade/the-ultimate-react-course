@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import ProductPage from './pages/Product.tsx';
 import HomePage from './pages/Home.tsx';
 import PricingPage from './pages/Pricing.tsx';
@@ -41,7 +41,7 @@ function App() {
         <Route path="product" element={<ProductPage />} />
         <Route path="pricing" element={<PricingPage />} />
         <Route path="app" element={<AppLayout />}>
-          <Route index element={<p>listofcities</p>} />
+          <Route index element={<Navigate to="cities" />} />
           <Route
             path="cities"
             element={
