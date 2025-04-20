@@ -3,7 +3,7 @@ import React from 'react';
 
 export interface ButtonProps {
   children: React.ReactNode;
-  onClick: (e: React.MouseEvent) => void;
+  onClick?: (e: React.MouseEvent) => void;
   type: string;
 }
 
