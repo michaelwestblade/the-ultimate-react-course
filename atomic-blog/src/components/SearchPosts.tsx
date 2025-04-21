@@ -1,16 +1,17 @@
-export interface SearchPostsProps {
-  searchQuery: string;
-  setSearchQuery: (query: string) => void;
-}
+import { useContext } from 'react';
+import { PostContext, PostContextInterface } from '../contexts/PostContext.ts';
 
-export default function SearchPosts({
-  searchQuery,
-  setSearchQuery,
-}: SearchPostsProps) {
+export interface SearchPostsProps {}
+
+export default function SearchPosts({}: SearchPostsProps) {
+  const { setSearchQuery, searchQuery } =
+    useContext<PostContextInterface>(PostContext);
   return (
     <input
       value={searchQuery}
-      onChange={(e) => setSearchQuery(e.target.value)}
+      onChange={(e) =>
+        setSearchQuery ? setSearchQuery(e.target.value) : () => {}
+      }
       placeholder="Search posts..."
     />
   );

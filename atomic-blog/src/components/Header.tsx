@@ -6,8 +6,7 @@ import { PostContext, PostContextInterface } from '../contexts/PostContext.ts';
 export interface HeaderProps {}
 
 export default function Header({}: HeaderProps) {
-  const { posts, setSearchQuery, searchQuery, onClearPosts } =
-    useContext<PostContextInterface>(PostContext);
+  const { onClearPosts } = useContext<PostContextInterface>(PostContext);
 
   return (
     <header>
@@ -15,13 +14,8 @@ export default function Header({}: HeaderProps) {
         <span>⚛️</span>The Atomic Blog
       </h1>
       <div>
-        <Results posts={posts || []} />
-        {searchQuery && setSearchQuery && (
-          <SearchPosts
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-          />
-        )}
+        <Results />
+        <SearchPosts />
         <button onClick={onClearPosts}>Clear posts</button>
       </div>
     </header>
