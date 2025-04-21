@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { PostContext, PostContextInterface } from '../contexts/PostContext.ts';
+import { PostContext, PostContextInterface } from '../contexts/PostContext.tsx';
 
 export interface SearchPostsProps {}
 

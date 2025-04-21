@@ -3,7 +3,7 @@ import { createRandomPost } from '../../../const.ts';
 import {
   PostContext,
   PostContextInterface,
-} from '../../contexts/PostContext.ts';
+} from '../../contexts/PostContext.tsx';
 
 export interface ArchiveProps {}
 

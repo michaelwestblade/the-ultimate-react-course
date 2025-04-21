@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import {
   PostContext,
   PostContextInterface,
-} from '../../contexts/PostContext.ts';
+} from '../../contexts/PostContext.tsx';
 
 export interface MainProps {}
 
