@@ -1,17 +1,23 @@
 import Posts from './Posts.tsx';
-import { PostInterface } from '../../../const.ts';
 import FormAddPost from './Form.tsx';
+import { useContext } from 'react';
+import {
+  PostContext,
+  PostContextInterface,
+} from '../../contexts/PostContext.ts';
 
-export interface MainProps {
-  posts: PostInterface[];
-  onAddPost: (post: PostInterface) => void;
-}
+export interface MainProps {}
 
-export default function Main({ posts, onAddPost }: MainProps) {
+export default function Main({}: MainProps) {
+  const { onAddPost, posts } = useContext<PostContextInterface>(PostContext);
+
   return (
-    <main>
-      <FormAddPost onAddPost={onAddPost} />
-      <Posts posts={posts} />
-    </main>
+    onAddPost &&
+    posts && (
+      <main>
+        <FormAddPost onAddPost={onAddPost} />
+        <Posts posts={posts} />
+      </main>
+    )
   );
 }

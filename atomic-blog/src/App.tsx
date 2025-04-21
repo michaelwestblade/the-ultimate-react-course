@@ -58,8 +58,8 @@ function App() {
         </button>
 
         <Header />
-        <Main posts={searchedPosts} onAddPost={handleAddPost} />
-        <Archive onAddPost={handleAddPost} />
+        <Main />
+        <Archive />
         <Footer />
       </section>
     </PostContext.Provider>
