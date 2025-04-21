@@ -1,9 +1,8 @@
-import { useContext } from 'react';
-import { PostContext, PostContextInterface } from '../contexts/PostContext.tsx';
+import { usePosts } from '../contexts/PostContext.tsx';
 
 export interface ResultsProps {}
 
 export default function Results({}: ResultsProps) {
-  const { posts } = useContext<PostContextInterface>(PostContext);
+  const { posts } = usePosts();
   return <p>🚀 {posts?.length} atomic posts found</p>;
 }

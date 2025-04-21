@@ -1,11 +1,9 @@
-import { useContext } from 'react';
-import { PostContext, PostContextInterface } from '../contexts/PostContext.tsx';
+import { usePosts } from '../contexts/PostContext.tsx';
 
 export interface SearchPostsProps {}
 
 export default function SearchPosts({}: SearchPostsProps) {
-  const { setSearchQuery, searchQuery } =
-    useContext<PostContextInterface>(PostContext);
+  const { setSearchQuery, searchQuery } = usePosts();
   return (
     <input
       value={searchQuery}

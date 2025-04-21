@@ -1,12 +1,11 @@
 import SearchPosts from './SearchPosts';
 import Results from './Results.tsx';
-import { useContext } from 'react';
-import { PostContext, PostContextInterface } from '../contexts/PostContext.tsx';
+import { usePosts } from '../contexts/PostContext.tsx';
 
 export interface HeaderProps {}
 
 export default function Header({}: HeaderProps) {
-  const { onClearPosts } = useContext<PostContextInterface>(PostContext);
+  const { onClearPosts } = usePosts();
 
   return (
     <header>

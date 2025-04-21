@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { createRandomPost, PostInterface } from '../../const.ts';
 
 export interface PostContextInterface {
@@ -63,4 +63,9 @@ export function PostProvider({ children }: { children: React.ReactNode }) {
       {children}
     </PostContext.Provider>
   );
+}
+
+export function usePosts() {
+  const context = useContext(PostContext);
+  return context;
 }

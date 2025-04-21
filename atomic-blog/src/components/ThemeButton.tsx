@@ -1,9 +1,8 @@
-import { useContext, useEffect } from 'react';
-import { PostContext, PostContextInterface } from '../contexts/PostContext.tsx';
+import { useEffect } from 'react';
+import { usePosts } from '../contexts/PostContext.tsx';
 
 export default function ThemeButton() {
-  const { isFakeDark, setIsFakeDark } =
-    useContext<PostContextInterface>(PostContext);
+  const { isFakeDark, setIsFakeDark } = usePosts();
 
   // Whenever `isFakeDark` changes, we toggle the `fake-dark-mode` class on the HTML element (see in "Elements" dev tool).
   useEffect(
