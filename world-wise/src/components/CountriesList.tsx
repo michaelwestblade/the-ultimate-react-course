@@ -1,20 +1,13 @@
 import styles from './CountryList.module.css';
-import { CityInterface } from '../const.ts';
 import Spinner from './Spinner.tsx';
 import Message from './Message.tsx';
 import CountryItem from './CountryItem.tsx';
+import { useCities } from '../contexts/CitiesContext.tsx';
 
-export interface CountryListProps {
-  cities: CityInterface[];
-  loading: boolean;
-  error: boolean;
-}
+export interface CountryListProps {}
 
-export default function CountryList({
-  cities,
-  loading,
-  error,
-}: CountryListProps) {
+export default function CountryList({}: CountryListProps) {
+  const { cities, loading, error } = useCities();
   if (loading) {
     return <Spinner />;
   }

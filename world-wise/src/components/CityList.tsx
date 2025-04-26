@@ -1,16 +1,13 @@
 import styles from './CityList.module.css';
-import { CityInterface } from '../const.ts';
 import Spinner from './Spinner.tsx';
 import CityItem from './CityItem.tsx';
 import Message from './Message.tsx';
+import { useCities } from '../contexts/CitiesContext.tsx';
 
-export interface CityListProps {
-  cities: CityInterface[];
-  loading: boolean;
-  error: boolean;
-}
+export interface CityListProps {}
 
-export default function CityList({ cities, loading, error }: CityListProps) {
+export default function CityList({}: CityListProps) {
+  const { cities, loading, error } = useCities();
   if (loading) {
     return <Spinner />;
   }
