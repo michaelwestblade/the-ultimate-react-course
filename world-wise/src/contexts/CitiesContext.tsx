@@ -5,16 +5,21 @@ export interface CitiesContextInterface {
   cities: CityInterface[];
   loading: boolean;
   error: boolean;
+  currentCity: CityInterface | null;
+  getCity: (id: string) => void;
 }
 
 export const CitiesContext = createContext<CitiesContextInterface>({
   cities: [],
   loading: false,
   error: false,
+  currentCity: null,
+  getCity: () => {},
 });
 
 export function CitiesProvider({ children }: { children: React.ReactNode }) {
   const [cities, setCities] = useState([]);
+  const [currentCity, setCurrentCity] = useState<CityInterface | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
@@ -36,8 +41,24 @@ export function CitiesProvider({ children }: { children: React.ReactNode }) {
     fetchCities();
   }, []);
 
+  async function getCity(id: string) {
+    try {
+      setLoading(true);
+      const res = await fetch(`http://localhost:9000/cities/${id}`);
+      const data = await res.json();
+      setLoading(false);
+      setCurrentCity(data);
+    } catch (error) {
+      setError(true);
+      setLoading(false);
+      console.error(error);
+    }
+  }
+
   return (
-    <CitiesContext.Provider value={{ cities, loading, error }}>
+    <CitiesContext.Provider
+      value={{ cities, loading, error, currentCity, getCity }}
+    >
       {children}
     </CitiesContext.Provider>
   );
