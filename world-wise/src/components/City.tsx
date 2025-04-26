@@ -3,6 +3,7 @@ import BackButton from './BackButton.tsx';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { useCities } from '../contexts/CitiesContext.tsx';
 import { useEffect } from 'react';
+import Spinner from './Spinner.tsx';
 
 const formatDate = (date?: string) =>
   new Intl.DateTimeFormat('en', {
@@ -18,13 +19,15 @@ function City() {
   const lng = searchParams.get('lng');
 
   const { id } = useParams();
-  const { getCity, currentCity } = useCities();
+  const { getCity, currentCity, loading } = useCities();
 
   useEffect(() => {
     getCity(id || '');
   }, [id]);
 
   const { cityName, emoji, date, notes } = currentCity || {};
+
+  if (loading) return <Spinner />;
 
   return (
     cityName &&
