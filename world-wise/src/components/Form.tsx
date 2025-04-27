@@ -23,6 +23,7 @@ function Form() {
   const [notes, setNotes] = useState('');
   const [isLoadingGeocoding, setIsLoadingGeocoding] = useState(false);
   const [lat, lng] = useUrlPosition();
+  const [emoji, setEmoji] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,6 +36,7 @@ function Form() {
         const data: ReverseGeoccodeResponse = await response.json();
         setCityName(data.city || data.locality || '');
         setCountry(data.countryName);
+        setEmoji(convertToEmoji(data.countryCode));
         console.log(data);
       } catch (error) {
         console.error(error);
@@ -55,7 +57,7 @@ function Form() {
           onChange={(e) => setCityName(e.target.value)}
           value={cityName}
         />
-        {/* <span className={styles.flag}>{emoji}</span> */}
+        {<span className={styles.flag}>{emoji}</span>}
       </div>
 
       <div className={styles.row}>
