@@ -1,6 +1,6 @@
 import styles from './City.module.css';
 import BackButton from './BackButton.tsx';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useCities } from '../contexts/CitiesContext.tsx';
 import { useEffect } from 'react';
 import Spinner from './Spinner.tsx';
@@ -14,10 +14,6 @@ const formatDate = (date?: string) =>
   }).format(new Date(date || ''));
 
 function City() {
-  const [searchParams] = useSearchParams();
-  const lat = searchParams.get('lat');
-  const lng = searchParams.get('lng');
-
   const { id } = useParams();
   const { getCity, currentCity, loading } = useCities();
 
