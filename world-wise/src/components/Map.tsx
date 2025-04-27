@@ -1,5 +1,5 @@
 import styles from './Map.module.css';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   MapContainer,
   Marker,
@@ -13,9 +13,9 @@ import { LatLngExpression } from 'leaflet';
 import { useCities } from '../contexts/CitiesContext.tsx';
 import { useGeolocation } from '../hooks/useGeoLocation.ts';
 import Button from './Button.tsx';
+import { useUrlPosition } from '../hooks/useUrlPosition.ts';
 
 export default function Map() {
-  const [searchParams] = useSearchParams();
   const { cities } = useCities();
   const {
     position: geoLocationPosition,
@@ -27,8 +27,7 @@ export default function Map() {
     lng: -0.09,
   });
 
-  const lat = parseFloat(searchParams.get('lat') || '51.505');
-  const lng = parseFloat(searchParams.get('lng') || '-0.09');
+  const [lat, lng] = useUrlPosition();
 
   useEffect(() => {
     setMapPosition({
