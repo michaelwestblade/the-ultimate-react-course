@@ -27,7 +27,7 @@ function Form() {
   const [lat, lng] = useUrlPosition();
   const [emoji, setEmoji] = useState('');
   const navigate = useNavigate();
-  const { createCity } = useCities();
+  const { createCity, loading, error } = useCities();
 
   useEffect(() => {
     async function fetchCityData() {
@@ -69,7 +69,11 @@ function Form() {
   };
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
+    <form
+      className={`${styles.form} ${loading ? styles.loading : ''}`}
+      onSubmit={handleSubmit}
+    >
+      {error && <p>{error}</p>}
       <div className={styles.row}>
         <label htmlFor="cityName">City name</label>
         <input
