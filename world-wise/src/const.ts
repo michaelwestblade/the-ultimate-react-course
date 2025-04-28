@@ -11,6 +11,11 @@ export interface CityInterface {
   id: number;
 }
 
+export interface User {
+  name: string;
+  email: string;
+}
+
 export interface ReverseGeoccodeResponse {
   latitude: number;
   lookupSource: string;
