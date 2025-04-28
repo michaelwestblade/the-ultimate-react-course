@@ -1,5 +1,6 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useReducer } from 'react';
 import { CityInterface } from '../const.ts';
+import { citiesReducer, initialState } from '../reducers/citiesReducer.ts';
 
 export interface CitiesContextInterface {
   cities: CityInterface[];
@@ -22,22 +23,18 @@ export const CitiesContext = createContext<CitiesContextInterface>({
 });
 
 export function CitiesProvider({ children }: { children: React.ReactNode }) {
-  const [cities, setCities] = useState<CityInterface[]>([]);
-  const [currentCity, setCurrentCity] = useState<CityInterface | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [state, dispatch] = useReducer(citiesReducer, initialState);
+  const { cities, loading, currentCity, error } = state;
 
   useEffect(() => {
     async function fetchCities() {
       try {
-        setLoading(true);
+        dispatch({ type: 'cities/loading', payload: true });
         const res = await fetch('http://localhost:9000/cities');
         const data = await res.json();
-        setLoading(false);
-        setCities(data);
+        dispatch({ type: 'cities/loaded', payload: data });
       } catch (error) {
-        setError(true);
-        setLoading(false);
+        dispatch({ type: 'cities/error', payload: error });
         console.error(error);
       }
     }
@@ -47,21 +44,19 @@ export function CitiesProvider({ children }: { children: React.ReactNode }) {
 
   async function getCity(id: string) {
     try {
-      setLoading(true);
+      dispatch({ type: 'city/loading', payload: true });
       const res = await fetch(`http://localhost:9000/cities/${id}`);
       const data = await res.json();
-      setLoading(false);
-      setCurrentCity(data);
+      dispatch({ type: 'city/loaded', payload: data });
     } catch (error) {
-      setError(true);
-      setLoading(false);
+      dispatch({ type: 'city/error', payload: error });
       console.error(error);
     }
   }
 
   async function createCity(city: CityInterface) {
     try {
-      setLoading(true);
+      dispatch({ type: 'cities/loading', payload: true });
       const res = await fetch('http://localhost:9000/cities', {
         method: 'POST',
         headers: {
@@ -70,18 +65,16 @@ export function CitiesProvider({ children }: { children: React.ReactNode }) {
         body: JSON.stringify(city),
       });
       const data: CityInterface = await res.json();
-      setCities((cities: CityInterface[]) => [...cities, data]);
-      setCurrentCity(data);
+      dispatch({ type: 'cities/created', payload: data });
       console.log(data);
     } catch (error: any) {
-    } finally {
-      setLoading(false);
+      dispatch({ type: 'cities/error', payload: error });
     }
   }
 
   async function deleteCity(city: CityInterface) {
     try {
-      setLoading(true);
+      dispatch({ type: 'cities/loading', payload: true });
       const res = await fetch(`http://localhost:9000/cities/${city.id}`, {
         method: 'DELETE',
         headers: {
@@ -90,14 +83,10 @@ export function CitiesProvider({ children }: { children: React.ReactNode }) {
         body: JSON.stringify(city),
       });
       const data: CityInterface = await res.json();
-      setCities((cities: CityInterface[]) =>
-        cities.filter((c) => c.id !== city.id)
-      );
-      setCurrentCity(null);
+      dispatch({ type: 'cities/deleted', payload: city });
       console.log(data);
     } catch (error: any) {
-    } finally {
-      setLoading(false);
+      dispatch({ type: 'cities/error', payload: error });
     }
   }
 
