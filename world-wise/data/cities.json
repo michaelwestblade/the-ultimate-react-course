@@ -59,18 +59,6 @@
         "lng": 13.376933665713324
       },
       "id": 98443188
-    },
-    {
-      "id": 7407,
-      "cityName": "Rugby",
-      "emoji": "🇬🇧",
-      "notes": "",
-      "country": "United Kingdom of Great Britain and Northern Ireland (the)",
-      "date": "Mon Apr 28 2025",
-      "position": {
-        "lat": 52.44261787120725,
-        "lng": -1.2744140625000002
-      }
     }
   ]
 }

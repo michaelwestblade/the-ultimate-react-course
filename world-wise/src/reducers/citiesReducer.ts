@@ -36,7 +36,7 @@ export function citiesReducer(
     case 'cities/deleted':
       return {
         ...state,
-        cities: action.payload,
+        cities: state.cities.filter((city) => city.id !== action.payload.id),
         loading: false,
         error: false,
         currentCity: null,
