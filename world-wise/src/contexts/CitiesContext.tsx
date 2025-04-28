@@ -8,6 +8,7 @@ export interface CitiesContextInterface {
   currentCity: CityInterface | null;
   getCity: (id: string) => void;
   createCity: (city: CityInterface) => void;
+  deleteCity: (city: CityInterface) => void;
 }
 
 export const CitiesContext = createContext<CitiesContextInterface>({
@@ -17,6 +18,7 @@ export const CitiesContext = createContext<CitiesContextInterface>({
   currentCity: null,
   getCity: () => {},
   createCity: () => {},
+  deleteCity: () => {},
 });
 
 export function CitiesProvider({ children }: { children: React.ReactNode }) {
@@ -77,9 +79,39 @@ export function CitiesProvider({ children }: { children: React.ReactNode }) {
     }
   }
 
+  async function deleteCity(city: CityInterface) {
+    try {
+      setLoading(true);
+      const res = await fetch(`http://localhost:9000/cities/${city.id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(city),
+      });
+      const data: CityInterface = await res.json();
+      setCities((cities: CityInterface[]) =>
+        cities.filter((c) => c.id !== city.id)
+      );
+      setCurrentCity(null);
+      console.log(data);
+    } catch (error: any) {
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <CitiesContext.Provider
-      value={{ cities, loading, error, currentCity, getCity, createCity }}
+      value={{
+        cities,
+        loading,
+        error,
+        currentCity,
+        getCity,
+        createCity,
+        deleteCity,
+      }}
     >
       {children}
     </CitiesContext.Provider>
