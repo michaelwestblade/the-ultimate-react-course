@@ -31,7 +31,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
     dispatch({ type: 'login/loading', payload: true });
     try {
       console.log(email, password);
-      dispatch({ type: 'login', payload: { email, name: 'John' } });
+      dispatch({
+        type: 'login',
+        payload: {
+          email,
+          name: 'John',
+          password,
+          avatar: 'https://avatars.githubusercontent.com/u/10367606?v=4',
+        },
+      });
     } catch (error) {
       dispatch({ type: 'login/error', payload: error });
     }

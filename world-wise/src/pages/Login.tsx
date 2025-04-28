@@ -18,7 +18,9 @@ export default function Login() {
   };
 
   useEffect(() => {
-    navigate('/app', { replace: true });
+    if (isAuthenticated) {
+      navigate('/app', { replace: true });
+    }
   }, [isAuthenticated]);
 
   return (
