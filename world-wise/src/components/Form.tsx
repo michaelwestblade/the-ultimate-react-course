@@ -8,6 +8,7 @@ import Button from './Button.tsx';
 import { useNavigate } from 'react-router-dom';
 import { useUrlPosition } from '../hooks/useUrlPosition.ts';
 import { CityInterface, ReverseGeoccodeResponse } from '../const.ts';
+import { useCities } from '../contexts/CitiesContext.tsx';
 
 export function convertToEmoji(countryCode: string) {
   const codePoints = countryCode
@@ -26,6 +27,7 @@ function Form() {
   const [lat, lng] = useUrlPosition();
   const [emoji, setEmoji] = useState('');
   const navigate = useNavigate();
+  const { createCity } = useCities();
 
   useEffect(() => {
     async function fetchCityData() {
@@ -52,6 +54,7 @@ function Form() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newCity: CityInterface = {
+      id: Math.floor(Math.random() * 100000),
       cityName,
       emoji,
       notes,
@@ -59,6 +62,10 @@ function Form() {
       date: date.toDateString(),
       position: { lat, lng },
     };
+
+    console.log(newCity);
+    createCity(newCity);
+    navigate(-1);
   };
 
   return (
@@ -93,16 +100,16 @@ function Form() {
       </div>
 
       <div className={styles.buttons}>
+        <Button type="primary">Add</Button>
         <Button
-          type="primary"
+          type="back"
           onClick={(e) => {
             e.preventDefault();
             navigate(-1);
           }}
         >
-          Add
+          &larr; Back
         </Button>
-        <Button type="back">&larr; Back</Button>
       </div>
     </form>
   );

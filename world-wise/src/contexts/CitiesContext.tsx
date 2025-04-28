@@ -7,6 +7,7 @@ export interface CitiesContextInterface {
   error: boolean;
   currentCity: CityInterface | null;
   getCity: (id: string) => void;
+  createCity: (city: CityInterface) => void;
 }
 
 export const CitiesContext = createContext<CitiesContextInterface>({
@@ -15,10 +16,11 @@ export const CitiesContext = createContext<CitiesContextInterface>({
   error: false,
   currentCity: null,
   getCity: () => {},
+  createCity: () => {},
 });
 
 export function CitiesProvider({ children }: { children: React.ReactNode }) {
-  const [cities, setCities] = useState([]);
+  const [cities, setCities] = useState<CityInterface[]>([]);
   const [currentCity, setCurrentCity] = useState<CityInterface | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -55,9 +57,29 @@ export function CitiesProvider({ children }: { children: React.ReactNode }) {
     }
   }
 
+  async function createCity(city: CityInterface) {
+    try {
+      setLoading(true);
+      const res = await fetch('http://localhost:9000/cities', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(city),
+      });
+      const data: CityInterface = await res.json();
+      setCities((cities: CityInterface[]) => [...cities, data]);
+      setCurrentCity(data);
+      console.log(data);
+    } catch (error: any) {
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <CitiesContext.Provider
-      value={{ cities, loading, error, currentCity, getCity }}
+      value={{ cities, loading, error, currentCity, getCity, createCity }}
     >
       {children}
     </CitiesContext.Provider>

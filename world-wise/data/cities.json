@@ -59,6 +59,30 @@
         "lng": 13.376933665713324
       },
       "id": 98443188
+    },
+    {
+      "id": -1,
+      "cityName": "London",
+      "emoji": "🇬🇧",
+      "notes": "tight",
+      "country": "United Kingdom of Great Britain and Northern Ireland (the)",
+      "date": "Mon Apr 28 2025",
+      "position": {
+        "lat": 51.467696956223385,
+        "lng": -0.087890625
+      }
+    },
+    {
+      "id": 5748,
+      "cityName": "Hanbury",
+      "emoji": "🇬🇧",
+      "notes": "boop",
+      "country": "United Kingdom of Great Britain and Northern Ireland (the)",
+      "date": "Mon Apr 28 2025",
+      "position": {
+        "lat": 52.855864177853995,
+        "lng": -1.7138671875000002
+      }
     }
   ]
 }
