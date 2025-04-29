@@ -23,8 +23,14 @@ export function citiesReducer(
     case 'city/loading':
       return { ...state, loading: action.payload, error: false };
     case 'cities/loaded':
-    case 'city/loaded':
       return { ...state, cities: action.payload, loading: false, error: false };
+    case 'city/loaded':
+      return {
+        ...state,
+        currentCity: action.payload,
+        loading: false,
+        error: false,
+      };
     case 'cities/created':
       return {
         ...state,

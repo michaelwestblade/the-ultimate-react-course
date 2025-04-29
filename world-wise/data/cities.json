@@ -59,6 +59,18 @@
         "lng": 13.376933665713324
       },
       "id": 98443188
+    },
+    {
+      "id": 23731,
+      "cityName": "Hemel Hempstead",
+      "emoji": "🇬🇧",
+      "notes": "",
+      "country": "United Kingdom of Great Britain and Northern Ireland (the)",
+      "date": "Tue Apr 29 2025",
+      "position": {
+        "lat": 51.795027225829145,
+        "lng": -0.6811523437500001
+      }
     }
   ]
 }

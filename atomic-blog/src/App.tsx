@@ -4,6 +4,9 @@ import Archive from './components/posts/Archive.tsx';
 import Footer from './components/Footer.tsx';
 import { PostProvider } from './contexts/PostContext.tsx';
 import ThemeButton from './components/ThemeButton.tsx';
+import { memo } from 'react';
+
+const MemoizedMain = memo(Main);
 
 function App() {
   return (
@@ -12,7 +15,7 @@ function App() {
         <ThemeButton />
 
         <Header />
-        <Main />
+        <MemoizedMain />
         <Archive />
         <Footer />
       </section>

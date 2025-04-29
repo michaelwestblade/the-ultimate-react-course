@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { createRandomPost, PostInterface } from '../../const.ts';
 
 export interface PostContextInterface {
@@ -47,22 +47,21 @@ export function PostProvider({ children }: { children: React.ReactNode }) {
     [isFakeDark]
   );
 
-  return (
-    <PostContext.Provider
-      value={{
-        posts,
-        onAddPost: handleAddPost,
-        onClearPosts: handleClearPosts,
-        searchQuery,
-        setSearchQuery,
-        isFakeDark,
-        setIsFakeDark,
-        searchedPosts,
-      }}
-    >
-      {children}
-    </PostContext.Provider>
+  const value = useMemo(
+    () => ({
+      posts,
+      onAddPost: handleAddPost,
+      onClearPosts: handleClearPosts,
+      searchQuery,
+      setSearchQuery,
+      isFakeDark,
+      setIsFakeDark,
+      searchedPosts,
+    }),
+    [posts, searchQuery, searchedPosts]
   );
+
+  return <PostContext.Provider value={value}>{children}</PostContext.Provider>;
 }
 
 export function usePosts() {
