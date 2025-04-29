@@ -18,7 +18,9 @@ function City() {
   const { getCity, currentCity, loading } = useCities();
 
   useEffect(() => {
-    getCity(id || '');
+    if (id) {
+      getCity(id);
+    }
   }, [id]);
 
   const { cityName, emoji, date, notes } = currentCity || {};

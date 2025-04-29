@@ -1,4 +1,10 @@
-import { createContext, useContext, useEffect, useReducer } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useReducer,
+} from 'react';
 import { CityInterface } from '../const.ts';
 import { citiesReducer, initialState } from '../reducers/citiesReducer.ts';
 
@@ -42,17 +48,22 @@ export function CitiesProvider({ children }: { children: React.ReactNode }) {
     fetchCities();
   }, []);
 
-  async function getCity(id: string) {
-    try {
-      dispatch({ type: 'city/loading', payload: true });
-      const res = await fetch(`http://localhost:9000/cities/${id}`);
-      const data = await res.json();
-      dispatch({ type: 'city/loaded', payload: data });
-    } catch (error) {
-      dispatch({ type: 'city/error', payload: error });
-      console.error(error);
-    }
-  }
+  const getCity = useCallback(
+    async function getCity(id: string) {
+      if (Number(id) === currentCity?.id) return;
+
+      try {
+        dispatch({ type: 'city/loading', payload: true });
+        const res = await fetch(`http://localhost:9000/cities/${id}`);
+        const data = await res.json();
+        dispatch({ type: 'city/loaded', payload: data });
+      } catch (error) {
+        dispatch({ type: 'city/error', payload: error });
+        console.error(error);
+      }
+    },
+    [currentCity?.id]
+  );
 
   async function createCity(city: CityInterface) {
     try {
