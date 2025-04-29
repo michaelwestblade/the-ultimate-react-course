@@ -5,14 +5,14 @@ import { usePosts } from '../../contexts/PostContext.tsx';
 export interface MainProps {}
 
 export default function Main({}: MainProps) {
-  const { onAddPost, posts } = usePosts();
+  const { onAddPost, searchedPosts } = usePosts();
 
   return (
     onAddPost &&
-    posts && (
+    searchedPosts && (
       <main>
         <FormAddPost onAddPost={onAddPost} />
-        <Posts posts={posts} />
+        <Posts posts={searchedPosts} />
       </main>
     )
   );

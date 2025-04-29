@@ -3,7 +3,7 @@ import { usePosts } from '../contexts/PostContext.tsx';
 export interface SearchPostsProps {}
 
 export default function SearchPosts({}: SearchPostsProps) {
-  const { setSearchQuery, searchQuery } = usePosts();
+  const { searchQuery, setSearchQuery } = usePosts();
   return (
     <input
       value={searchQuery}
