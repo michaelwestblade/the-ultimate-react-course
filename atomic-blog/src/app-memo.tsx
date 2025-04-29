@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { faker } from '@faker-js/faker';
 import { PostInterface } from '../const.ts';
 
@@ -26,9 +26,9 @@ function App() {
         )
       : posts;
 
-  function handleAddPost(post: PostInterface) {
+  const handleAddPost = useCallback(function (post: PostInterface) {
     setPosts((posts) => [post, ...posts]);
-  }
+  }, []);
 
   function handleClearPosts() {
     setPosts([]);
@@ -66,7 +66,7 @@ function App() {
         setSearchQuery={setSearchQuery}
       />
       <Main posts={searchedPosts} onAddPost={handleAddPost} />
-      <Archive archiveOptions={archiveOptions} />
+      <Archive archiveOptions={archiveOptions} onAddPost={handleAddPost} />
       <Footer />
     </section>
   );
@@ -187,8 +187,10 @@ function List({ posts }: { posts: PostInterface[] }) {
 
 const Archive = memo(function Archive({
   archiveOptions,
+  onAddPost,
 }: {
   archiveOptions: { show: boolean; title: string };
+  onAddPost: (post: PostInterface) => void;
 }) {
   const { show, title } = archiveOptions;
 
@@ -214,6 +216,7 @@ const Archive = memo(function Archive({
               <p>
                 <strong>{post.title}:</strong> {post.body}
               </p>
+              <button onClick={() => onAddPost(post)}>Add</button>
             </li>
           ))}
         </ul>
